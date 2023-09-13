@@ -1,0 +1,3 @@
+D:/studying/university/labs/DSA-LABS/lab1.1/LAB1.1way2/cmake-build-debug/CMakeFiles/LAB1_1way2.dir
+D:/studying/university/labs/DSA-LABS/lab1.1/LAB1.1way2/cmake-build-debug/CMakeFiles/edit_cache.dir
+D:/studying/university/labs/DSA-LABS/lab1.1/LAB1.1way2/cmake-build-debug/CMakeFiles/rebuild_cache.dir
