@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2023-09-13T05:38:41.942Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36 OPR/101.0.0.0" etag="Tr7pjDABT0klkaVgVU9p" version="21.7.4" type="device">
+<mxfile host="app.diagrams.net" modified="2023-09-23T04:32:21.669Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36 OPR/102.0.0.0" etag="SKEcWErjviAKRliTSOhg" version="21.7.5" type="device">
   <diagram name="Page-1" id="VxpvuFYHDa3X4Nwbr_S7">
-    <mxGraphModel dx="2111" dy="678" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="2685" dy="985" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -155,6 +155,14 @@
         </mxCell>
         <mxCell id="QYfmIqn0VEfUrAXzZHGp-51" value="Вивід &quot;no value&quot;" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;rounded=1;arcSize=0;" parent="1" vertex="1">
           <mxGeometry y="790" width="147.5" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="ZhZNljCOdCVT9Hw6gwEo-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="QYfmIqn0VEfUrAXzZHGp-52" target="QYfmIqn0VEfUrAXzZHGp-5">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="204" y="1120" />
+              <mxPoint x="485" y="1120" />
+            </Array>
+          </mxGeometry>
         </mxCell>
         <mxCell id="QYfmIqn0VEfUrAXzZHGp-52" value="Вивід &quot;no value&quot;" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;rounded=1;arcSize=0;" parent="1" vertex="1">
           <mxGeometry x="130" y="940" width="147.5" height="50" as="geometry" />
