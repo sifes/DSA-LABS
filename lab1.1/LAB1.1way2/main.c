@@ -6,7 +6,7 @@ int main() {
     scanf("%f", &x);
     if (x<25)
     {
-        if (x<=15 && x>5 || x<=-5 && x>-10)
+        if (x && x>5 || x<=-5 && x>-10)
         {
             y=x*x*x-6;
             printf("%.2f", y);
