@@ -15,9 +15,9 @@ int main() {
 
     for (int i = 0; i < 8; i++) {
         for (int j = 0; j < 9; j++) {
-            printf("%3d ", arr[i][j]); // Adjust the format to align the elements properly
+            printf("%3d ", arr[i][j]);
         }
-        printf("\n"); // Move to the next row
+        printf("\n");
     }
     int i, j;
     int isPresent = 0;
