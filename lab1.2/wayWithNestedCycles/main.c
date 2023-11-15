@@ -9,13 +9,13 @@ int main() {
     for (i = 1; i <= n; i++) {
         r = 1;
         for (j = 1; j <= i; j++) {
-            r *= (sin(j)); // <=, ++, jump, sin(), *=,    - 5
-            count += 5;
+            r *= (sin(j));
+            count += 5; // <=, ++, jump, sin(), *=
         }
-        s += (sin(i) +2) / (i + r); // <=, ++, jump, =, =, +=, sin(), +, /, +
-        count += 10;
+        s += (sin(i) +2) / (i + r);
+        count += 11;  // <=, <=, ++, jump, =, =, +=, sin(), +, /, +
     }
-    count += 2; // 2
+    count += 2; // операції присвоєння s = 0; i = 1;
     printf("%d \n",count);
     printf("%.7lf",s);
     return 0;
