@@ -1,35 +1,40 @@
 #include <stdio.h>
-#include <unistd.h>
+#include <windows.h>
+
 
 int main() {
-    usleep(300);
-int arr[24][80] = {
-            {12, 9, 8, 21, 44, 2, 49, 18, 6},
-            {31, 12, 11, 5, 26, 42, 39, 19, 28},
-            {1, 7, 12, 14, 9, 36, 20, 50, 4},
-            {31, 16, 37, 12, 13, 45, 10, 27, 23},
-            {38, 22, 25, 33, 12, 29, 43, 24, 17},
-            {48, 32, 34, 40, 41, 12, 19, 3, 8},
-            {2, 9, 45, 7, 14, 50, 28, 12, 39},
-            {5, 20, 33, 49, 10, 26, 19, 44, 12},
-            {5, 20, 33, 49, 10, 26, 19, 44, 12},
-            {5, 20, 33, 49, 10, 26, 19, 44, 12},
-            {5, 20, 33, 49, 10, 26, 19, 44, 12},
-            {5, 20, 33, 49, 10, 26, 19, 44, 12},
-            {5, 20, 33, 49, 10, 26, 19, 44, 12},
-            {5, 20, 33, 49, 10, 26, 19, 44, 12},
-            {5, 20, 33, 49, 10, 26, 19, 44, 12},
-            {5, 20, 33, 49, 10, 26, 19, 44, 12},
-            {5, 20, 33, 49, 10, 26, 19, 44, 12},
-            {5, 20, 33, 49, 10, 26, 19, 44, 12},
-};
+    HANDLE hout = GetStdHandle(STD_OUTPUT_HANDLE);
+    COORD Pos;
+    system("mode 80, 24");
 
-    for (int i = 0; i < 24; i++) {
-        for (int j = 0; j < 80; j++) {
-            printf("%3d ", arr[i][j]);
+    for (int i = 0; i < 12; i++) {
+        if(i%2==0) {
+            for (int j = 79; j >= 0; j--) {
+                Pos.Y = i;
+                Pos.X = j;
+                SetConsoleCursorPosition(hout, Pos);
+                printf("$");
+                Sleep(1);
+                Pos.Y = 23-i;
+                SetConsoleCursorPosition(hout, Pos);
+                printf("$");
+                Sleep(1);
+            }
+        } else {
+            for (int j = 0; j < 80; j++) {
+                Pos.Y = i;
+                Pos.X = j;
+                SetConsoleCursorPosition(hout, Pos);
+                printf("$");
+                Sleep(1);
+                Pos.Y = 23-i;
+                SetConsoleCursorPosition(hout, Pos);
+                printf("$");
+                Sleep(1);
+            }
         }
-        printf("\n");
+
     }
-    printf("Hello, World!\n");
+    Sleep(2000);
     return 0;
 }
