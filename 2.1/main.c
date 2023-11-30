@@ -1,9 +1,11 @@
 #include <stdio.h>
 
+
 int main() {
     int m = 8;
     int n = 7;
     double x;
+
 
     double Array[8][7] = {
             {1.1 ,1.2 ,1.3, 2.4, 2.5, 2.7, 3.7},
@@ -16,6 +18,7 @@ int main() {
             {1.1, 2.1, 2.1, 2.1, 2.2, 2.2, 2.3},
     };
 
+
     for (int i = 0; i < 8; i++) {
         for (int j = 0; j < 7; j++) {
             printf("%2.1lf ", Array[i][j]);
@@ -23,11 +26,14 @@ int main() {
         printf("\n");
     }
 
+
     printf("Enter X: ");
     scanf("%lf", &x);
 
+
     int column = -1;
     int row = -1;
+
 
     int low; // the start (first index) (~left)
     int high; // the end (first index) (~left)
@@ -61,6 +67,7 @@ int main() {
             while (low <= high) {
                 int midIndex = (high + low) / 2;
                 double midValue = Array[m-1][midIndex];
+
 
                 if (midValue == x) {
                     column = midIndex;
