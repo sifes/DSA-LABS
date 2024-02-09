@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <windows.h>
 
-
 int main() {
     HANDLE hout = GetStdHandle(STD_OUTPUT_HANDLE);
     int columns = 80, rows = 24;
