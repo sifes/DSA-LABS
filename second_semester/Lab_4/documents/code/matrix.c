@@ -1,8 +1,9 @@
 #include <stdlib.h>
 #include <stdio.h>
-#include "../header/matrix.h"
 
-
+#define NUM_VERTICES 11
+#define SEED 3215
+#define K 0.705
 
 double **randm() {
     int n = NUM_VERTICES;

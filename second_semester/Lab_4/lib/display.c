@@ -209,7 +209,7 @@ void drawDoubleArc(HDC hdc,int x1, int y1, int x2, int y2, int isDirected) {
     double dy2 = fabs(cy2 - y2);
     double tanFi2 = dx2 / dy2;
 
-    double fi2 = atan2(dy2, dx2) * 180 / 3.1416;
+    double fi2 = atan2(dy2, dx2) * 180 / 3.1426;
     int ay2 = radius / sqrt(1 + tanFi2 * tanFi2);
     int ax2 = ay2 * tanFi2;
 

@@ -69,3 +69,49 @@ void outputMatrix(double **matrix) {
     }
     printf("\n");
 }
+
+void printDegrees(double **degrees) {
+    printf("{  ");
+    for (int i = 0; i < NUM_VERTICES; i++) {
+        printf("%d  ", degrees[i]);
+    }
+    printf("}\n");
+}
+
+void print2Pathways(double **powerMatrix, double **matrix) {
+    const int numbers = NUM_VERTICES;
+    for (int i = 0; i < numbers; i++) {
+        for (int j = 0; j < numbers; j++) {
+            if (powerMatrix[i][j]) {
+
+                for (int e = 0; e < numbers; e++) {
+                    if (matrix[i][e] && matrix[e][j]) {
+                        printf("%d->%d->%d;  ", i + 1, e + 1, j + 1);
+                    }
+                }
+                printf("\n");
+
+            }
+        }
+    }
+}
+
+void output3Paths(double **powerMatrix, double**matrix) {
+    const int numbers = NUM_VERTICES;
+    for (int i = 0; i < numbers; i++) {
+        for (int j = 0; j < numbers; j++) {
+            if (powerMatrix[i][j]) {
+
+                for (int k = 0; k < numbers; k++) {
+                    for (int m = 0; m < numbers; m++) {
+                        if (matrix[i][k] && matrix[k][m] && matrix[m][j]) {
+                            printf("%d->%d->%d->%d;  ", i + 1, k + 1, m + 1, j + 1);
+                        }
+                    }
+                }
+                printf("\n");
+
+            }
+        }
+    }
+}

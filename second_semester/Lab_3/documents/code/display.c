@@ -3,13 +3,13 @@
 #include "../header/matrix.h"
 #include <stdio.h>
 
-void drawArrow(HDC, float, int, int);                                // стрілки
+void drawArrow(HDC, float, int, int);                                // стрілка
 void drawLoops(HDC, double**, int**, int);                           // петлі
-void drawMultipleArc(HDC, int, int, int, int);                       // кратні дуги
-void drawDoubleArc (HDC, int, int, int, int, int);                   // верхні і нижні дуги
-void drawLeftArc(HDC, int, int, int, int, int);                      // ліві дуги
-void drawRightArc(HDC, int, int, int, int, int);                     // праві дуги
-void drawStraightEdge(HDC, int, int, int, int, int);                 // прямі ребра
+void drawMultipleArc(HDC, int, int, int, int);                       // подвійні дуги всередині
+void drawDoubleArc (HDC, int, int, int, int, int);                   // подвійні дуги за межами
+void drawLeftArc(HDC, int, int, int, int, int);                      // дуги справа
+void drawRightArc(HDC, int, int, int, int, int);                     // дуги справа
+void drawStraightEdge(HDC, int, int, int, int, int);                 // ребра всередині
 void drawEdges(HDC, int**, int);
 int **getVerticesCoords(int);
 
@@ -44,7 +44,6 @@ void drawEdges(HDC hdc, int **coords, int isDirected) {
     int k = n;
     int distance = abs(coords[0][0] - coords[0][1]);
     drawLoops(hdc, matrix, coords, isDirected);
-
     for (int i = 0; i < n; i++) {
         if (!isDirected) k = i;
         for (int j = 0; j < k; j++) {
@@ -109,21 +108,16 @@ void drawEdges(HDC hdc, int **coords, int isDirected) {
 
 
 void drawArrow(HDC hdc, float fi, int px, int py) {
-    // Convert angle from degrees to radians
     fi = 3.1416 * (180.0 - fi) / 180.0;
 
-    // Calculate coordinates for left and right points of the arrowhead
     int lx, ly, rx, ry;
     lx = px + 15 * cos(fi + 0.3);
     rx = px + 15 * cos(fi - 0.3);
     ly = py + 15 * sin(fi + 0.3);
     ry = py + 15 * sin(fi - 0.3);
 
-    // Move to the left point of the arrowhead
     MoveToEx(hdc, lx, ly, NULL);
-    // Draw line from left point to the starting point of the arrow
     LineTo(hdc, px, py);
-    // Draw line from starting point of the arrow to the right point of the arrowhead
     LineTo(hdc, rx, ry);
 }
 
@@ -145,110 +139,58 @@ void drawMultipleArc(HDC hdc, int x1, int y1, int x2, int y2) {
     int radius = RADIUS;
     double cx, cy;
     double dx, dy;
-    double fi, tanFi;
-    int ax, ay;
-    if (y1 == y2) {
-        cx = (x1 + x2) * 0.5;
-        cy = (y1 + y2) * 0.5;
-        cy = x2 > x1 ? cy + radius : cy - radius;
-        dx = fabs(cx - x2);
-        dy = fabs(cy - y2);
 
-        tanFi = dy / dx;
-        fi = atan(tanFi) * 180 / 3.1416;
-        ax = radius / sqrt(1 + tanFi * tanFi);
-        ay = ax * tanFi;
-
-        ax = x2 > x1 ? -ax : ax;
-        ay = x2 > x1 ? ay : -ay;
-        fi = x2 > x1 ? fi : 180 + fi;
-
-        MoveToEx(hdc, x1, y1, NULL);
-        LineTo(hdc, cx, cy);
-        MoveToEx(hdc, cx, cy, NULL);
-        LineTo(hdc, x2, y2);
-        drawArrow(hdc, fi, x2 + ax, y2 + ay);
-
-    } else if (x1 == x2) {
-        cx = (x1 + x2) * 0.5;
-        cx = y2 > y1 ? cx - radius : cx + radius;
-        cy = (y1 + y2) * 0.5;
-        dx = fabs(cx - x2);
-        dy = fabs(cy - y2);
-
-        tanFi = dx / dy;
-        fi = atan(tanFi) * 180 / 3.1416;
-        ay = radius / sqrt(1 + tanFi * tanFi);
-        ax = ay * tanFi;
-
-        ax = y2 > y1 ? -ax : ax;
-        ay = y2 > y1 ? -ay : ay;
-        fi = y2 > y1 ? -90 + fi : 90 + fi;
-
-        MoveToEx(hdc, x1, y1, NULL);
-        LineTo(hdc, cx, cy);
-        MoveToEx(hdc, cx, cy, NULL);
-        LineTo(hdc, x2, y2);
-        drawArrow(hdc, fi, x2 + ax, y2 + ay);
-
-    } else if (x2 > x1) {
-        cx = (x1 + x2) * 0.5 - radius;
-        cy = (y1 + y2) * 0.5 - radius;
-        dx = fabs(cx - x2);
-        dy = fabs(cy - y2);
-
-        if (dx > dy) {
-            tanFi = dx / dy;
-            fi = 90 - atan(tanFi) * 180 / 3.1416;
-            ay = radius / sqrt(1 + tanFi * tanFi);
-            ax = ay * tanFi;
+    if (x2 > x1) {
+        if (y1 < y2) {
+            cx = (x1 + x2) * 0.5 - radius;
+            cy = (y1 + y2) * 0.5 + radius;
         } else {
-            tanFi = dy / dx;
-            fi = atan(tanFi) * 180 / 3.1416;
-            ax = radius / sqrt(1 + tanFi * tanFi);
-            ay = ax * tanFi;
+            cx = (x1 + x2) * 0.5 + radius;
+            cy = (y1 + y2) * 0.5 + radius;
         }
-
-        fi = y2 > y1 ? -fi : fi;
-        ay = y2 > y1 ? -ay : ay;
-
-        MoveToEx(hdc, x1, y1, NULL);
-        LineTo(hdc, cx, cy);
-        MoveToEx(hdc, cx, cy, NULL);
-        LineTo(hdc, x2, y2);
-        drawArrow(hdc, fi, x2 - ax, y2 + ay);
-
     } else {
-        cx = (x1 + x2) * 0.5 + radius;
-        cy = (y1 + y2) * 0.5 + radius;
-        dx = abs(cx - x2);
-        dy = abs(cy - y2);
-
-        if (dx > dy) {
-            tanFi = dx / dy;
-            fi = 90 - atan(tanFi) * 180 / 3.1416;
-            ay = radius / sqrt(1 + tanFi * tanFi);
-            ax = ay * tanFi;
+        if (y1 < y2) {
+            cx = (x1 + x2) * 0.5 - radius;
+            cy = (y1 + y2) * 0.5 - radius;
         } else {
-            tanFi = dy / dx;
-            fi = atan(tanFi) * 180 / 3.1416;
-            ax = radius / sqrt(1 + tanFi * tanFi);
-            ay = ax * tanFi;
+            cx = (x1 + x2) * 0.5 + radius;
+            cy = (y1 + y2) * 0.5 - radius;
         }
-
-        fi = y1 > y2 ? -fi : fi;
-        ay = y2 > y1 ? -ay : ay;
-
-        MoveToEx(hdc, x1, y1, NULL);
-        LineTo(hdc, cx, cy);
-        MoveToEx(hdc, cx, cy, NULL);
-        LineTo(hdc, x2, y2);
-        drawArrow(hdc, fi + 180, x2 + ax, y2 + ay);
     }
+
+
+    dx = fabs(cx - x2);
+    dy = fabs(cy - y2);
+    double tanFi = dy / dx;
+    double fi = atan(tanFi) * 180 / 3.1416;
+    int ax = radius / sqrt(1 + tanFi * tanFi);
+    int ay = ax * tanFi;
+
+    if (x2 > x1) {
+        if (y1 < y2) {
+            ay = -ay;
+            fi = -fi;
+            ax = -ax;
+        } else {
+            ax = -ax;
+        }
+    } else {
+        if (y1 < y2) {
+            fi = 180 + fi;
+            ay= -ay;
+        } else {
+            fi = 180 - fi;
+        }
+    }
+
+    MoveToEx(hdc, x1, y1, NULL);
+    LineTo(hdc, cx, cy);
+    MoveToEx(hdc, cx, cy, NULL);
+    LineTo(hdc, x2, y2);
+    drawArrow(hdc, fi, x2 + ax, y2 + ay);
 }
 
 void drawDoubleArc(HDC hdc,int x1, int y1, int x2, int y2, int isDirected) {
-
     int radius = RADIUS;
     double cx1 = (x1 + x2) * 0.60;
     double cy1 = (y1 + y2) * 0.53;
@@ -357,60 +299,39 @@ void drawStraightEdge(HDC hdc, int x1, int y1, int x2, int y2, int isDirected) {
     double fi, tanFi;
     int ax, ay;
 
-    if (y1 == y2) {
-        fi = x2 > x1 ? 0 : 180;
-        ax = x2 > x1 ? -radius : radius;
-
-        MoveToEx(hdc, x1, y1, NULL);
-        LineTo(hdc, x2, y2);
-        if (isDirected) drawArrow(hdc, fi, x2 + ax, y2);
-
-    } else if (x1 == x2) {
-        fi = y2 > y1 ? -90 : 90;
-        ay = y2 > y1 ? -radius : radius;
-
-        MoveToEx(hdc, x1, y1, NULL);
-        LineTo(hdc, x2, y2);
-        if (isDirected) drawArrow(hdc, fi, x2, y2 + ay);
-
-    } else if (x2 > x1) {
-        if (absx > absy) {
-            tanFi = absx / absy;
-            fi = 90 - atan(tanFi) * 180 / 3.1416;
-            ay = radius / sqrt(1 + tanFi * tanFi);
-            ax = ay * tanFi;
-        } else {
-            tanFi = absy / absx;
-            fi = atan(tanFi) * 180 / 3.1416;
-            ax = radius / sqrt(1 + tanFi * tanFi);
-            ay = ax * tanFi;
-        }
-
-        fi = y2 > y1 ? -fi : fi;
-        ay = y2 > y1 ? -ay : ay;
-
-        MoveToEx(hdc, x1, y1, NULL);
-        LineTo(hdc, x2, y2);
-        if (isDirected) drawArrow(hdc, fi, x2 - ax, y2 + ay);
-
-    } else if (x1 > x2) {
-        if (absx > absy) {
-            tanFi = absx / absy;
-            fi = 90 - atan(tanFi) * 180 / 3.1416;
-            ay = radius / sqrt(1 + tanFi * tanFi);
-            ax = ay * tanFi;
-        } else {
-            tanFi = absy / absx;
-            fi = atan(tanFi) * 180 / 3.1416;
-            ax = radius / sqrt(1 + tanFi * tanFi);
-            ay = ax * tanFi;
-        }
-
-        fi = y1 > y2 ? -fi : fi;
-        ay = y2 > y1 ? -ay : ay;
-
-        MoveToEx(hdc, x1, y1, NULL);
-        LineTo(hdc, x2, y2);
-        if (isDirected) drawArrow(hdc, fi + 180, x2 + ax, y2 + ay);
+    if (!absy) {
+        fi = 0;
+        ax = radius;
+        ay = 0;
+    } else if (!absx) {
+        fi = 90;
+        ay = radius;
+        ax = 0;
+    } else {
+        tanFi =  (double)absy / (double)absx;
+        ax = radius / sqrt(1 + tanFi * tanFi);
+        ay = ax * tanFi;
+        fi = atan2( absy,absx ) * 180 / 3.1416;
     }
+
+    if (y1 < y2) {
+        if (x1<x2) {
+            fi = -fi;
+            ay = -ay;
+            ax = -ax;
+        } else {
+            ay = -ay;
+            fi = 180 + fi;
+        }
+    } else {
+        if (x1<x2) {
+            ax = -ax;
+        } else {
+            fi = 180-fi;
+        }
+    }
+
+    MoveToEx(hdc, x1, y1, NULL);
+    LineTo(hdc, x2, y2);
+    if (isDirected) drawArrow(hdc, fi, x2 + ax, y2 + ay);
 }
